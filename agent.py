@@ -18,10 +18,10 @@ def run_agent(question, provider, tools, max_steps=6):
     # Khi có final answer, kiểm tra nguồn như yêu cầu ở Bài 4 trong GUIDE.md.
     # Trả completed, max_steps hoặc error cùng answer, trace và usage.
     messages = [
-        {"role": "system", "content": SYSTEM_PROMPT},
+        {"role": "system", "content": getattr(tools, "system_prompt", SYSTEM_PROMPT)},
         {"role": "user", "content": question},
     ]
-    schemas = SCHEMAS
+    schemas = getattr(tools, "schemas", SCHEMAS)
     trace, usage = [], []
     answer = ""
     observed_urls = set()
